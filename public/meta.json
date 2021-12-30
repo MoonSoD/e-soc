@@ -1,0 +1,60 @@
+{
+    "name": "e-soc_frontend",
+    "plugins": [
+        {
+            "name": "SASS/SCSS",
+            "description": "Sass is a stylesheet language that’s compiled to CSS. It allows you to use variables, nested rules, mixins, functions, and more, all with a fully CSS-compatible syntax.",
+            "url": "https://sass-lang.com/documentation"
+        },
+        {
+            "name": "Axios",
+            "description": "Promise based HTTP client for the browser and node.js.",
+            "url": "https://github.com/axios/axios"
+        },
+        {
+            "name": "Environment Variables",
+            "description": "Use environment variables in your next.js project for server side, client or both.",
+            "url": "https://github.com/vercel/next.js/tree/canary/examples/environment-variables"
+        },
+        {
+            "name": "Reverse Proxy",
+            "description": "Proxying some URLs can be useful when you have a separate API backend development server and you want to send API requests on the same domain.",
+            "url": "https://webpack.js.org/configuration/dev-server/#devserverproxy"
+        },
+        {
+            "name": "Bundle Analyzer",
+            "description": "Use webpack-bundle-analyzer in your Next.js project. Visualize size of webpack output files with an interactive zoomable treemap.",
+            "url": "https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer"
+        },
+        {
+            "name": "SWR",
+            "description": "React Hooks library for data fetching from Vercel",
+            "url": "https://swr.vercel.app/"
+        },
+        {
+            "name": "Zustand",
+            "description": "A small, fast and scalable bearbones state-management solution using simplified flux principles.",
+            "url": "https://github.com/pmndrs/zustand"
+        },
+        {
+            "name": "ESLint",
+            "description": "A pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript. Maintain your code quality with ease.",
+            "url": "https://eslint.org/docs/user-guide/getting-started"
+        },
+        {
+            "name": "Prettier",
+            "description": "An opinionated code formatter; Supports many languages; Integrates with most editors.",
+            "url": "https://prettier.io/docs/en/index.html"
+        },
+        {
+            "name": "lint-staged",
+            "description": " The concept of lint-staged is to run configured linter (or other) tasks on files that are staged in git.",
+            "url": "https://github.com/okonet/lint-staged"
+        },
+        {
+            "name": "Docker",
+            "description": "",
+            "url": ""
+        }
+    ]
+}
