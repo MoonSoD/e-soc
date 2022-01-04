@@ -10,7 +10,8 @@ const Layout = {
   `,
   Main: styled.main`
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     background-color: ${colors.lightGray};
 
     @media only screen and (min-width: 1024px) {

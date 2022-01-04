@@ -5,23 +5,24 @@ import { Container } from "@styles";
 const table = {
   header: [
     {
-      id: "room",
-      label: "Izba",
+      id: "name",
+      label: "Názov",
     },
     {
-      id: "pavilon",
-      label: "Pavilón",
-      align: "center" as const,
+      id: "supplement",
+      label: "Doplnok",
     },
     {
-      id: "level",
-      label: "Poschodie",
-      align: "center" as const,
+      id: "strength",
+      label: "Sila",
     },
     {
-      id: "occupation",
-      label: "Obsadenie",
-      align: "center" as const,
+      id: "ATC",
+      label: "ATC",
+    },
+    {
+      id: "Issue",
+      label: "Výdaj",
     },
     {
       id: "action",
@@ -31,10 +32,22 @@ const table = {
   ],
   data: [
     {
-      rowEntries: [12, 2, 2, "4/5"],
+      rowEntries: [
+        "FURORESE 250",
+        "tbl 50x250mg",
+        "250 mg",
+        "Furosemid",
+        "Na predpis",
+      ],
     },
     {
-      rowEntries: [12, 2, 2, "4/5"],
+      rowEntries: [
+        "FURORESE 250",
+        "tbl 50x250mg",
+        "250 mg",
+        "Furosemid",
+        "Na predpis",
+      ],
     },
   ],
 };
@@ -43,12 +56,12 @@ const Home: FC = () => {
   return (
     <>
       <TopNav>
-        <PageCard label="Zoznam izieb" icon="home-plus" />
+        <PageCard label="Zoznam liečiv" icon="plus-circle-outline" />
       </TopNav>
       <Container marginTop="2.85rem">
         <DataTable
           withActions
-          searchPlaceholder="12"
+          searchPlaceholder="Furosemid..."
           header={table.header}
           data={table.data}
         />

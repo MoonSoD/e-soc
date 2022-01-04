@@ -8,6 +8,10 @@ export const colors = {
 };
 
 export const Container = styled.div<{ marginTop?: string }>`
-  width: calc(100% - 4.375rem);
+  width: 100%;
   margin: ${(props) => props.marginTop} auto 0;
+
+  @media only screen and (min-width: 768px) {
+    width: calc(100% - 4.375rem);
+  }
 `;

@@ -65,7 +65,7 @@ export const DataTable: FC<Props> = ({
                 </Styled.Td>
               ))}
               {withActions && (
-                <Styled.Td align="right">
+                <Styled.Td id="actions" align="right">
                   <Icon
                     className="offset-top"
                     name="grid-small-round"

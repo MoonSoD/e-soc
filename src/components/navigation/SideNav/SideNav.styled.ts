@@ -12,10 +12,11 @@ export default {
       cursor: pointer;
     }
   `,
-  Base: styled.nav`
+  Base: styled.nav<{ open?: boolean }>`
     height: 98.23vh;
-    width: 250px;
+    width: 15.625rem;
     background-color: #fff;
+    transform: translateX(${(props) => (props?.open ? "0%" : "-100%")});
   `,
   Wrapper: styled.div`
     margin: 0.9375rem 1.25rem;
@@ -96,6 +97,7 @@ export default {
     Picture: styled.div`
       display: grid;
       place-items: center;
+      aspect-ratio: 1/1;
       width: 3.125rem;
       height: 3.125rem;
       margin-right: 0.625rem;

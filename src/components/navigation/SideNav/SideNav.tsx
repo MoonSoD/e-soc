@@ -21,20 +21,20 @@ const links = [
     path: "/rooms",
   },
   {
-    icon: "user-heart",
-    label: "Návštevy",
-    path: "/visitation",
-  },
-  {
     icon: "plus-circle-outline",
     label: "Lieky",
     path: "/medication",
+  },
+  {
+    icon: "user-heart",
+    label: "Návštevy",
+    path: "/visitation",
   },
 ];
 
 export const SideNav: FC = () => {
   return (
-    <Styled.Base>
+    <Styled.Base open={true}>
       <Styled.Wrapper>
         <div>
           <Styled.Header>
