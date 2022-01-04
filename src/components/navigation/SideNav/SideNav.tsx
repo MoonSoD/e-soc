@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Icon } from "@components/common/Icon/Icon";
 import Image from "next/image";
 import Styled from "./SideNav.styled";
+import { PageLink } from "@components/common/PageLink";
 
 const links = [
   {
@@ -50,12 +51,14 @@ export const SideNav: FC = () => {
           <Styled.List>
             {links.map((link) => (
               <li key={link.path}>
-                <a>
-                  <div className="icon">
-                    <Icon white name={link.icon} height={26} width={26} />
-                  </div>
-                  <span>{link.label}</span>
-                </a>
+                <PageLink href={link.path}>
+                  <a>
+                    <div className="icon">
+                      <Icon white name={link.icon} height={26} width={26} />
+                    </div>
+                    <span>{link.label}</span>
+                  </a>
+                </PageLink>
               </li>
             ))}
           </Styled.List>

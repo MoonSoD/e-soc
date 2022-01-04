@@ -8,6 +8,7 @@ export default {
     align-items: center;
     padding: 0 0.9375rem;
     height: 5.625rem;
+    width: 100%;
     border-radius: 10px;
     box-shadow: 0px 0px 31.875px 1.275px rgba(0, 0, 0, 0.25);
     background-color: ${(props) => props.color};

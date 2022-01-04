@@ -9,6 +9,5 @@ export const colors = {
 
 export const Container = styled.div<{ marginTop?: string }>`
   width: calc(100% - 4.375rem);
-  margin: 0 auto;
-  margin-top: ${(props) => props.marginTop};
+  margin: ${(props) => props.marginTop} auto 0;
 `;

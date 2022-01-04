@@ -9,9 +9,13 @@ const Layout = {
     flex-direction: row;
   `,
   Main: styled.main`
-    width: calc(100vw - 15.625rem);
+    width: 100vw;
     height: 100vh;
     background-color: ${colors.lightGray};
+
+    @media only screen and (min-width: 1024px) {
+      width: calc(100vw - 15.625rem);
+    }
   `,
 };
 

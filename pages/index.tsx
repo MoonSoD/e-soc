@@ -1,20 +1,32 @@
 import React, { FC } from "react";
-import { StatsCard, TopNav, withLayout } from "@components";
+import { AlertCard, StatsCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import styled from "styled-components";
 
 const Styled = {
   StatsGrid: styled.section`
     display: grid;
-    gap: 2.1875rem;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 2rem;
+    grid-template-columns: repeat(1, 1fr);
 
     @media only screen and (min-width: 768px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 4.5rem;
+      grid-template-columns: repeat(3, 1fr);
     }
 
     @media only screen and (min-width: 1024px) {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(4, 1fr);
+    }
+  `,
+  AlertGrid: styled.section`
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media only screen and (min-width: 1024px) {
+      gap: 4.5rem;
+      padding-right: 2rem;
+      grid-template-columns: repeat(2, 1fr);
     }
   `,
 };
@@ -22,7 +34,7 @@ const Styled = {
 const Home: FC = () => {
   return (
     <>
-      <TopNav>kek</TopNav>
+      <TopNav />
       <Container marginTop="2.1875rem">
         <Styled.StatsGrid>
           <StatsCard
@@ -47,6 +59,10 @@ const Home: FC = () => {
             color="#48699B"
           />
         </Styled.StatsGrid>
+        <Styled.AlertGrid>
+          <AlertCard type="night" />
+          <AlertCard type="day" />
+        </Styled.AlertGrid>
       </Container>
     </>
   );

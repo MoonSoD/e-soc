@@ -116,7 +116,7 @@ export default {
 
       margin: 0;
       font-size: 1.125rem;
-      font-weight: 500;
+      font-weight: 400;
 
       & > a {
         margin-left: 0.2rem;
