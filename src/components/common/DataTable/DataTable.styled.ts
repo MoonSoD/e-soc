@@ -95,4 +95,43 @@ export default {
     user-select: none;
     cursor: ${(props) => (props?.sortable ? "pointer" : "initial")};
   `,
+  Pagination: {
+    Base: styled.div`
+      display: flex;
+      width: 100%;
+      justify-content: end;
+      margin-top: 0.5rem;
+    `,
+    List: styled.ul`
+      display: flex;
+      margin: 0;
+
+      & > li {
+        margin-right: 5px;
+      }
+
+      & > li:last-child {
+        margin-right: 0;
+      }
+    `,
+    Item: styled.li<{ active?: boolean }>`
+      all: unset;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 8px;
+      color: #fff;
+      background-color: ${(props) =>
+        props?.active ? colors.lightGreen : colors.darkGreen};
+      font-size: 0.875rem;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+      transition-duration: 0.3s;
+
+      &:hover {
+        background-color: ${colors.lightGreen};
+      }
+    `,
+  },
 };

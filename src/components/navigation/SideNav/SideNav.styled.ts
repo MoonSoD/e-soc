@@ -45,10 +45,7 @@ export default {
 
     & li {
       margin: 0.21875rem 0;
-
-      &:hover {
-        filter: brightness(95%);
-      }
+      user-select: none;
 
       a {
         display: flex;

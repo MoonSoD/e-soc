@@ -36,6 +36,9 @@
       ],
       "@public": [
         "public"
+      ],
+      "@hooks": [
+        "src/lib/hooks"
       ]
     },
     "incremental": true

@@ -11,21 +11,24 @@ const Styled = {
 
     @media only screen and (min-width: 768px) {
       gap: 4.5rem;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
 
     @media only screen and (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media only screen and (min-width: 1280px) {
       grid-template-columns: repeat(4, 1fr);
     }
   `,
   AlertGrid: styled.section`
     display: grid;
-    gap: 2rem;
+    gap: 4.5rem;
     grid-template-columns: repeat(1, 1fr);
 
     @media only screen and (min-width: 1024px) {
       gap: 4.5rem;
-      padding-right: 2rem;
       grid-template-columns: repeat(2, 1fr);
     }
   `,
@@ -51,6 +54,14 @@ const Home: FC = () => {
             accentColor="#8B4141"
             color="#9B4848"
           />
+          <StatsCard
+            label="obsadených izieb"
+            value={12}
+            icon="home-alt-check"
+            accentColor="#415E8B"
+            color="#48699B"
+          />
+
           <StatsCard
             label="obsadených izieb"
             value={12}

@@ -9,9 +9,9 @@ export const colors = {
 
 export const Container = styled.div<{ marginTop?: string }>`
   width: 100%;
-  margin: ${(props) => props.marginTop} auto 0;
+  margin: ${(props) => props.marginTop} auto 0 2.1875rem;
 
   @media only screen and (min-width: 768px) {
-    width: calc(100% - 4.375rem);
+    width: calc(100% - 6.2rem);
   }
 `;

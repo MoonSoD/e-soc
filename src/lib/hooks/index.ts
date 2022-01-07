@@ -1,2 +1,2 @@
-export { uiState } from "./use-ui";
-export type { UI } from "./use-ui";
+export { useUI } from "./use-ui";
+export type { uiType, UI } from "./use-ui";

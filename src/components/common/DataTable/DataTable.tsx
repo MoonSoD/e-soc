@@ -24,7 +24,7 @@ export const DataTable: FC<Props> = ({
 }) => {
   return (
     <>
-      <Styled.Search.Wrapper>
+      <Styled.Search.Wrapper id="wrapper">
         <Styled.Search.Badge>Vyhľadať</Styled.Search.Badge>
         <Styled.Search.Input
           placeholder={searchPlaceholder}
@@ -36,7 +36,7 @@ export const DataTable: FC<Props> = ({
           <Icon name="search" width={22} height={22} />
         </Styled.Search.Icon>
       </Styled.Search.Wrapper>
-      <Styled.Table>
+      <Styled.Table id="table">
         <Styled.Header>
           {header?.map((item) => (
             <Styled.Th
@@ -52,7 +52,7 @@ export const DataTable: FC<Props> = ({
           ))}
         </Styled.Header>
         <Styled.Body>
-          {data?.map((data) => (
+          {data?.map((data, i) => (
             <Styled.DataRow>
               {data?.rowEntries?.map((entry) => (
                 <Styled.Td
@@ -78,6 +78,17 @@ export const DataTable: FC<Props> = ({
           ))}
         </Styled.Body>
       </Styled.Table>
+      <Styled.Pagination.Base id="base">
+        <Styled.Pagination.List>
+          <Styled.Pagination.Item>
+            <Icon white name="chevron-big-left" width={12} height={12} />
+          </Styled.Pagination.Item>
+          <Styled.Pagination.Item>1</Styled.Pagination.Item>
+          <Styled.Pagination.Item>
+            <Icon white name="chevron-big-right" width={12} height={12} />
+          </Styled.Pagination.Item>
+        </Styled.Pagination.List>
+      </Styled.Pagination.Base>
     </>
   );
 };

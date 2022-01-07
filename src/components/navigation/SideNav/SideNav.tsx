@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Icon } from "@components/common/Icon/Icon";
 import Image from "next/image";
 import Styled from "./SideNav.styled";
-import { PageLink } from "@components/common/PageLink";
+import { SideNavItem } from "@components/navigation/SideNav/SideNavItem/SideNavItem";
 
 const links = [
   {
@@ -14,6 +14,13 @@ const links = [
     icon: "group",
     label: "Klienti",
     path: "/clients",
+    expandable: true,
+    subLinks: [
+      {
+        label: "Zoznam klientov",
+        path: "/clients",
+      },
+    ],
   },
   {
     icon: "home-plus",
@@ -24,12 +31,23 @@ const links = [
     icon: "plus-circle-outline",
     label: "Lieky",
     path: "/medication",
+    expandable: true,
+    subLinks: [
+      {
+        label: "Zoznam liekov",
+        path: "/medication",
+      },
+      {
+        label: "Kalendár liekov",
+        path: "/medication/calendar",
+      },
+    ],
   },
-  {
+  /*  {
     icon: "user-heart",
     label: "Návštevy",
     path: "/visitation",
-  },
+  },*/
 ];
 
 export const SideNav: FC = () => {
@@ -50,16 +68,7 @@ export const SideNav: FC = () => {
           <Styled.Label>HLAVNÉ MENU</Styled.Label>
           <Styled.List>
             {links.map((link) => (
-              <li key={link.path}>
-                <PageLink href={link.path}>
-                  <a>
-                    <div className="icon">
-                      <Icon white name={link.icon} height={26} width={26} />
-                    </div>
-                    <span>{link.label}</span>
-                  </a>
-                </PageLink>
-              </li>
+              <SideNavItem {...link} />
             ))}
           </Styled.List>
         </div>
@@ -75,7 +84,7 @@ export const SideNav: FC = () => {
                 <Icon name="log-out" width={24} height={24} />
               </a>
             </Styled.Profile.Name>
-            <Styled.Profile.Role>Riadieľ</Styled.Profile.Role>
+            <Styled.Profile.Role>Riaditeľ</Styled.Profile.Role>
           </Styled.Profile.Info>
         </Styled.Profile.Wrapper>
       </Styled.Wrapper>
