@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { DataTable, PageCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
+import { useRouter } from "next/router";
 
 const table = {
   header: [
@@ -39,6 +40,8 @@ const table = {
 };
 
 const Home: FC = () => {
+  const router = useRouter();
+
   return (
     <>
       <TopNav>
@@ -50,6 +53,7 @@ const Home: FC = () => {
           searchPlaceholder="Ján Novák..."
           header={table.header}
           data={table.data}
+          onAction={(id) => router.push("/clients/client#" + id)}
         />
       </Container>
     </>

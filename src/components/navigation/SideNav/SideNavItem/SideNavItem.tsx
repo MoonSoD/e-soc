@@ -1,7 +1,9 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Icon, PageLink } from "@components";
 import Styled from "./SideNavItem.styled";
 import { uiType, useUI } from "@hooks";
+import { useRouter } from "next/router";
+import classNames from "classnames";
 
 interface Props {
   path: string;
@@ -16,13 +18,16 @@ interface Props {
 
 export const SideNavItem: FC<Props> = (link) => {
   const ui = useUI();
+  const router = useRouter();
+
+  const isActive = () => router.pathname === link.path;
 
   return (
     <li key={link.path}>
       {link?.expandable ? (
         <div onClick={() => ui.toggle(link.path as uiType)}>
           <a>
-            <div className="icon">
+            <div className={classNames("icon", { active: isActive() })}>
               <Icon white name={link.icon} height={26} width={26} />
             </div>
             <span>{link.label}</span>
@@ -31,7 +36,7 @@ export const SideNavItem: FC<Props> = (link) => {
       ) : (
         <PageLink href={link.path}>
           <a>
-            <div className="icon">
+            <div className={classNames("icon", { active: isActive() })}>
               <Icon white name={link.icon} height={26} width={26} />
             </div>
             <span>{link.label}</span>

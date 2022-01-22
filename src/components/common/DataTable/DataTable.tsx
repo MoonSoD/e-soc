@@ -4,24 +4,34 @@ import { Icon } from "@components/common/Icon/Icon";
 
 interface Props {
   withActions?: boolean;
+  onAction?: (id: string | number | boolean) => void;
   header: {
     label: string;
     id: string;
     align?: "left" | "center" | "right";
     sortable?: boolean;
   }[];
-  data: { rowEntries: (string | number | boolean)[] }[];
+  data: RowData;
   onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
   searchPlaceholder?: string;
 }
 
+type RowData = { rowEntries: RowEntries }[];
+type RowEntries = (string | number | boolean)[];
+
 export const DataTable: FC<Props> = ({
   withActions,
+  onAction,
   header,
   data,
   onSearch,
   searchPlaceholder,
 }) => {
+  const indexOf = (
+    data: { rowEntries: RowEntries },
+    entry: string | number | boolean,
+  ) => data?.rowEntries?.indexOf(entry);
+
   return (
     <>
       <Styled.Search.Wrapper id="wrapper">
@@ -56,16 +66,20 @@ export const DataTable: FC<Props> = ({
             <Styled.DataRow>
               {data?.rowEntries?.map((entry) => (
                 <Styled.Td
-                  align={
-                    header[data?.rowEntries?.indexOf(entry)]?.align ?? "left"
-                  }
+                  align={header[indexOf(data, entry)]?.align ?? "left"}
                   id={entry?.toString()}
                 >
                   {entry}
                 </Styled.Td>
               ))}
               {withActions && (
-                <Styled.Td id="actions" align="right">
+                <Styled.Td
+                  onClick={
+                    onAction ? () => onAction(data.rowEntries?.[0]) : undefined
+                  }
+                  id="actions"
+                  align="right"
+                >
                   <Icon
                     className="offset-top"
                     name="grid-small-round"

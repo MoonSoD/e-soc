@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { Icon } from "@components/common/Icon/Icon";
+import { Icon, ProfilePill, SideNavItem } from "@components";
 import Image from "next/image";
 import Styled from "./SideNav.styled";
-import { SideNavItem } from "@components/navigation/SideNav/SideNavItem/SideNavItem";
 
 const links = [
   {
@@ -72,21 +71,7 @@ export const SideNav: FC = () => {
             ))}
           </Styled.List>
         </div>
-        <Styled.Profile.Wrapper>
-          <Styled.Profile.Picture>J</Styled.Profile.Picture>
-          <Styled.Profile.Info>
-            <Styled.Profile.Name>
-              John Doe
-              <a>
-                <Icon name="settings-filled" width={24} height={24} />
-              </a>
-              <a>
-                <Icon name="log-out" width={24} height={24} />
-              </a>
-            </Styled.Profile.Name>
-            <Styled.Profile.Role>Riaditeľ</Styled.Profile.Role>
-          </Styled.Profile.Info>
-        </Styled.Profile.Wrapper>
+        <ProfilePill name="John Doe" role="Riaditeľ" showActions />
       </Styled.Wrapper>
     </Styled.Base>
   );

@@ -15,7 +15,7 @@ export default {
   Base: styled.nav<{ open?: boolean }>`
     height: 98.23vh;
     width: 15.625rem;
-    background-color: #fff;
+    background-color: #fdfdfd;
     transform: translateX(${(props) => (props?.open ? "0%" : "-100%")});
   `,
   Wrapper: styled.div`
@@ -46,6 +46,12 @@ export default {
     & li {
       margin: 0.21875rem 0;
       user-select: none;
+
+      &:hover {
+        & .icon {
+          background-color: ${colors.darkGreen};
+        }
+      }
 
       a {
         display: flex;
@@ -79,54 +85,15 @@ export default {
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
         width: 2.5rem;
         height: 2.5rem;
+        transition-duration: 0.3s;
         flex-shrink: 0;
         z-index: 10;
         background-color: ${colors.lightGreen};
+
+        &.active {
+          background-color: ${colors.darkGreen};
+        }
       }
     }
   `,
-  Profile: {
-    Wrapper: styled.div`
-      margin: 1.125rem 0;
-      display: flex;
-      align-items: center;
-    `,
-    Picture: styled.div`
-      display: grid;
-      place-items: center;
-      aspect-ratio: 1/1;
-      width: 3.125rem;
-      height: 3.125rem;
-      margin-right: 0.625rem;
-      border-radius: 100%;
-      box-shadow: 0px 4px 50px rgba(0, 0, 0, 0.25);
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #fff;
-      background-color: ${colors.lightGreen};
-    `,
-    Info: styled.div`
-      display: flex;
-      flex-direction: column;
-    `,
-    Name: styled.p`
-      display: flex;
-      align-items: center;
-
-      margin: 0;
-      font-size: 1.125rem;
-      font-weight: 400;
-
-      & > a {
-        margin-left: 0.2rem;
-        cursor: pointer;
-      }
-    `,
-    Role: styled.p`
-      margin: 0;
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: ${colors.darkGray};
-    `,
-  },
 };

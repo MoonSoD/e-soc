@@ -89,6 +89,10 @@ export default {
   `,
   Td: styled.td<Align>`
     text-align: ${(props) => props.align};
+
+    & > img {
+      cursor: pointer;
+    }
   `,
   Th: styled.th<Align & { sortable?: boolean }>`
     text-align: ${(props) => props.align};
