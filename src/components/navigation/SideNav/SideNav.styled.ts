@@ -13,6 +13,8 @@ export default {
     }
   `,
   Base: styled.nav<{ open?: boolean }>`
+    position: sticky;
+    top: 0;
     height: 98.23vh;
     width: 15.625rem;
     background-color: #fdfdfd;

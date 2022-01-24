@@ -1,20 +1,10 @@
 import React, { FC } from "react";
-import {
-  Icon,
-  PageCard,
-  ProfilePill,
-  TabNav,
-  TopNav,
-  withLayout,
-} from "@components";
+import { ClientDetail, Icon, withLayout } from "@components";
 import styled from "styled-components";
 import { colors } from "@styles";
 
 const Styled = {
-  Wrapper: styled.section`
-    height: calc(100vh - 11.5rem);
-    background-color: #fff;
-    margin: 0;
+  Wrapper: styled.div`
     padding: 1.5rem 0;
   `,
   ClientInfo: {
@@ -52,14 +42,9 @@ const Styled = {
   },
 };
 
-const Client: FC = () => {
+const Index: FC = () => {
   return (
-    <>
-      <TopNav>
-        <PageCard label="Podrobnosti klienta" icon="user" />
-        <ProfilePill name="Ján Novák" role="klient" />
-      </TopNav>
-      <TabNav />
+    <ClientDetail client="Ján Novák">
       <Styled.Wrapper>
         <Styled.ClientInfo.List>
           <InfoBadge
@@ -69,11 +54,11 @@ const Client: FC = () => {
           />
         </Styled.ClientInfo.List>
       </Styled.Wrapper>
-    </>
+    </ClientDetail>
   );
 };
 
-export default withLayout(Client, "wide");
+export default withLayout(Index, "wide");
 
 interface Props {
   icon: string;

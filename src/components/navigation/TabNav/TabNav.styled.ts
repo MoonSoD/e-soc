@@ -20,13 +20,16 @@ export default {
     display: grid;
     place-items: center;
     transition-duration: 0.3s;
+    user-select: none;
+
+    &:nth-child(2) {
+      border-left: 1px solid ${colors.darkGreen};
+    }
 
     ${(props) =>
       props?.active &&
       css`
         background-color: #d7eed9;
       `}
-
-    border-right: 1px solid ${colors.darkGreen};
   `,
 };
