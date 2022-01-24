@@ -4,14 +4,14 @@ import { colors } from "@styles";
 export default {
   Wrapper: styled.aside`
     position: sticky;
-    top: 1rem;
+    top: 0.5rem;
     width: 20rem;
     @media only screen and (min-width: 1536px) {
       width: 25rem;
     }
     flex-shrink: 0;
     height: calc(100vh - 5rem);
-    margin: 0;
+    margin: 0.375rem 0 0;
     padding: 0;
     border: 2px solid #f6f6f6;
   `,
