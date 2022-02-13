@@ -1,7 +1,17 @@
-import React, { FC } from "react";
+import React from "react";
 import { AlertCard, StatsCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import styled from "styled-components";
+import {
+  GetServerSidePropsContext,
+  GetStaticProps,
+  GetStaticPropsContext,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+  NextPageContext,
+} from "next";
+import { getStats, Stats } from "@services";
+import { getSession } from "next-auth/react";
 
 const Styled = {
   StatsGrid: styled.section`
@@ -34,7 +44,9 @@ const Styled = {
   `,
 };
 
-const Home: FC = () => {
+const Home = ({
+  stats,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       <TopNav />
@@ -42,29 +54,21 @@ const Home: FC = () => {
         <Styled.StatsGrid>
           <StatsCard
             label="klientov"
-            value={40}
+            value={stats.count.clients}
             icon="user"
             accentColor="#418B48"
             color="#489B50"
           />
           <StatsCard
             label="plánovaných návštev"
-            value={12}
+            value={stats.count.plannedVisits}
             icon="group-alt"
             accentColor="#8B4141"
             color="#9B4848"
           />
           <StatsCard
-            label="obsadených izieb"
-            value={12}
-            icon="home-alt-check"
-            accentColor="#415E8B"
-            color="#48699B"
-          />
-
-          <StatsCard
-            label="obsadených izieb"
-            value={12}
+            label="dostupných miest"
+            value={stats.count.availablePlaces}
             icon="home-alt-check"
             accentColor="#415E8B"
             color="#48699B"
@@ -80,3 +84,14 @@ const Home: FC = () => {
 };
 
 export default withLayout(Home, "narrow");
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const session = await getSession(ctx);
+  const stats: Stats = await getStats(session?.accessToken);
+
+  return {
+    props: {
+      stats,
+    },
+  };
+};

@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { SideNav } from "@components";
 import styled from "styled-components";
 import { colors } from "@styles";
+import { Toaster } from "react-hot-toast";
 
 const Layout = {
   Wrapper: styled.section`
@@ -20,13 +21,15 @@ const Layout = {
   `,
 };
 
-export const withLayout = (WrapperComponent: FC, type?: "narrow" | "wide") => {
-  return () => (
-    <Layout.Wrapper>
-      <SideNav />
-      <Layout.Main>
-        <WrapperComponent />
-      </Layout.Main>
-    </Layout.Wrapper>
+export const withLayout = (WrapperComponent: any, type?: "narrow" | "wide") => {
+  return (
+    <>
+      <Layout.Wrapper>
+        <SideNav />
+        <Layout.Main>
+          <WrapperComponent />
+        </Layout.Main>
+      </Layout.Wrapper>
+    </>
   );
 };

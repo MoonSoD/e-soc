@@ -6,6 +6,9 @@
       "dom.iterable",
       "esnext"
     ],
+    "typeRoots": [
+      "src/types"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -39,6 +42,12 @@
       ],
       "@hooks": [
         "src/lib/hooks"
+      ],
+      "@services": [
+        "src/lib/services"
+      ],
+      "@services/*": [
+        "src/lib/services/*"
       ]
     },
     "incremental": true

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import styled from "styled-components";
 import Cover from "@public/images/login-cover.svg";
 import Logo from "@public/images/logo.png";
@@ -6,6 +6,9 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { Form } from "@components";
 import { colors } from "@styles";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 const Styled = {
   Container: styled.div`
@@ -65,6 +68,7 @@ const Styled = {
     width: 100%;
     color: #fff;
     border: none;
+    text-align: center;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     transition-duration: 0.3s;
@@ -78,6 +82,29 @@ const Styled = {
 
 const Login: FC = () => {
   const form = useForm();
+  const router = useRouter();
+
+  const onSubmit = async () => {
+    const tryLogin = async () => {
+      const result = await signIn<any>("credentials", {
+        email: form.getValues("email"),
+        password: form.getValues("password"),
+        redirect: false,
+      });
+
+      console.log(
+        `Res: ${JSON.stringify(result)}: ${result?.error === undefined}`,
+      );
+
+      return !result?.error === undefined;
+    };
+
+    await toast.promise(tryLogin(), {
+      success: "Prihlásenie bolo úspešné!",
+      error: "Prihlásenie zlyhalo, skontrolujte prosím zadané údaje.",
+      loading: "Prihlasujem...",
+    });
+  };
 
   return (
     <Styled.Container>
@@ -89,7 +116,7 @@ const Login: FC = () => {
           <Image src={Logo} width={110} height={55} unoptimized />
         </div>
         <Styled.CtaText>Začnite prihlásením do systému</Styled.CtaText>
-        <Styled.Form>
+        <Styled.Form onSubmit={(e) => e.preventDefault()}>
           <Form.Input.Base>
             <Form.Input.Label>e-mail</Form.Input.Label>
             <Form.Input.Input
@@ -108,7 +135,12 @@ const Login: FC = () => {
               {...form.register("password")}
             />
           </Form.Input.Base>
-          <Styled.Button type="submit" value="Prihlásiť" />
+          <Styled.Button
+            type="submit"
+            onSubmit={(e) => e.preventDefault()}
+            value="Prihlásiť"
+            onClick={onSubmit}
+          />
         </Styled.Form>
       </Styled.Stripe>
     </Styled.Container>
