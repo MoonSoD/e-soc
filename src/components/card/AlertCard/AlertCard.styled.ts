@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Props } from "./AlertCard";
+import { Props, Type } from "./AlertCard";
 import { colors } from "@styles";
 
 export default {
   Badge: {
-    Wrapper: styled.div<Props>`
+    Wrapper: styled.div<{ type: Type }>`
       display: flex;
       position: relative;
       width: 12.5rem;
@@ -15,7 +15,7 @@ export default {
       box-shadow: 0px 0px 31.875px 1.3px #00000040;
       border-radius: 12.75px;
     `,
-    Icon: styled.div<Props>`
+    Icon: styled.div<{ type: Type }>`
       display: grid;
       margin-left: -1rem;
       place-items: center;

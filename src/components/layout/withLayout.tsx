@@ -21,15 +21,17 @@ const Layout = {
   `,
 };
 
-export const withLayout = (WrapperComponent: any, type?: "narrow" | "wide") => {
-  return (
-    <>
-      <Layout.Wrapper>
-        <SideNav />
-        <Layout.Main>
-          <WrapperComponent />
-        </Layout.Main>
-      </Layout.Wrapper>
-    </>
-  );
-};
+export const withLayout =
+  (WrapperComponent: FC) =>
+  (props: JSX.IntrinsicAttributes & { children?: React.ReactNode }) => {
+    return (
+      <>
+        <Layout.Wrapper>
+          <SideNav />
+          <Layout.Main>
+            <WrapperComponent {...props} />
+          </Layout.Main>
+        </Layout.Wrapper>
+      </>
+    );
+  };

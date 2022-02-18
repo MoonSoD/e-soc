@@ -1,7 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Icon, ProfilePill, SideNavItem } from "@components";
 import Image from "next/image";
 import Styled from "./SideNav.styled";
+import useSWR from "swr";
+import { getSelf } from "@services";
+import { useSession } from "next-auth/react";
 
 const links = [
   {
@@ -50,6 +53,21 @@ const links = [
 ];
 
 export const SideNav: FC = () => {
+  const session = useSession();
+  const isAuthed = session.status === "authenticated";
+
+  const userRequest = useSWR(isAuthed ? "/personel/self" : null, () =>
+    getSelf(session.data?.accessToken),
+  );
+
+  const userData = userRequest?.data;
+  const roles = { 1: "Opatrovateľ", 2: "Riaditeľ" };
+
+  const userRole = () => {
+    const role = userData?.role as keyof typeof roles;
+    return roles?.[role];
+  };
+
   return (
     <Styled.Base open={true}>
       <Styled.Wrapper>
@@ -71,7 +89,14 @@ export const SideNav: FC = () => {
             ))}
           </Styled.List>
         </div>
-        <ProfilePill name="John Doe" role="Riaditeľ" showActions />
+        <ProfilePill
+          name={
+            isAuthed && userData
+              ? `${userData?.name} ${userData?.surname}`
+              : "..."
+          }
+          role={isAuthed && userData ? userRole() : "..."}
+        />
       </Styled.Wrapper>
     </Styled.Base>
   );

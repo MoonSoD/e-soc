@@ -1,30 +1,27 @@
-import NextAuth, { CallbacksOptions, NextAuthOptions, User } from "next-auth";
+import NextAuth, { CallbacksOptions, NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { getPersonelById, login, Personel } from "@services";
-import { signOut } from "next-auth/react";
+import { getSelf, login } from "@services";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const callbacks: CallbacksOptions = {
   async signIn(info) {
-    console.log("Signing in!" + JSON.stringify(info.user));
-    return true;
+    return info.user?.email !== undefined;
   },
   async redirect(info) {
     return info.url;
   },
   async jwt({ token, user }) {
-    console.log("JWT TOK " + user?.access_token);
-    return { access_token: token.access_token };
+    if (user) {
+      token.access_token = user.access_token;
+    }
+
+    return token;
   },
   async session({ session, user, token }) {
-    console.log("getting sess" + token.access_token);
-    const usr = (await getPersonelById("ckzli20qd0002bsqstv3r1ow6", "").catch(
-      () => signOut(),
-    )) as Personel;
-
-    console.log(usr.name);
+    const usr = await getSelf(token.access_token);
 
     session.user = usr;
+    console.log("USR " + session.user.name);
     session.accessToken = token.access_token;
 
     return session;
@@ -50,8 +47,6 @@ const options: NextAuthOptions = {
           credentials?.password,
         );
 
-        console.log("Logging in" + JSON.stringify(loginResult));
-
         if (loginResult) {
           return Promise.resolve(loginResult);
         }
@@ -69,7 +64,7 @@ const options: NextAuthOptions = {
     signOut: "/login",
     error: "/login",
   },
-  secret: "1234",
+  secret: process.env.NEXTAUTH_SECRET || "57ec775042c83a5e42382f4538f1270a",
 };
 
 export default (req: NextApiRequest, res: NextApiResponse) =>

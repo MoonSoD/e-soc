@@ -70,4 +70,4 @@ const Home: FC = () => {
   );
 };
 
-export default withLayout(Home, "narrow");
+export default withLayout(Home);

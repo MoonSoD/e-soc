@@ -1,6 +1,7 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useEffect } from "react";
 import Styled from "./DataTable.styled";
 import { Icon } from "@components/common/Icon/Icon";
+import { useForm } from "react-hook-form";
 
 interface Props {
   withActions?: boolean;
@@ -32,6 +33,8 @@ export const DataTable: FC<Props> = ({
     entry: string | number | boolean,
   ) => data?.rowEntries?.indexOf(entry);
 
+  const { register, watch } = useForm();
+
   return (
     <>
       <Styled.Search.Wrapper id="wrapper">
@@ -40,7 +43,7 @@ export const DataTable: FC<Props> = ({
           placeholder={searchPlaceholder}
           maxLength={23}
           type="text"
-          onChange={onSearch}
+          {...register("search")}
         />
         <Styled.Search.Icon>
           <Icon name="search" width={22} height={22} />
@@ -62,34 +65,42 @@ export const DataTable: FC<Props> = ({
           ))}
         </Styled.Header>
         <Styled.Body>
-          {data?.map((data, i) => (
-            <Styled.DataRow>
-              {data?.rowEntries?.map((entry) => (
-                <Styled.Td
-                  align={header[indexOf(data, entry)]?.align ?? "left"}
-                  id={entry?.toString()}
-                >
-                  {entry}
-                </Styled.Td>
-              ))}
-              {withActions && (
-                <Styled.Td
-                  onClick={
-                    onAction ? () => onAction(data.rowEntries?.[0]) : undefined
-                  }
-                  id="actions"
-                  align="right"
-                >
-                  <Icon
-                    className="offset-top"
-                    name="grid-small-round"
-                    width={33}
-                    height={33}
-                  />
-                </Styled.Td>
-              )}
-            </Styled.DataRow>
-          ))}
+          {data
+            ?.filter((data) => {
+              return data.rowEntries.find((entry) =>
+                entry.toString().includes(watch("search") ?? ""),
+              );
+            })
+            ?.map((data, i) => (
+              <Styled.DataRow>
+                {data?.rowEntries?.map((entry) => (
+                  <Styled.Td
+                    align={header[indexOf(data, entry)]?.align ?? "left"}
+                    id={entry?.toString()}
+                  >
+                    {entry}
+                  </Styled.Td>
+                ))}
+                {withActions && (
+                  <Styled.Td
+                    onClick={
+                      onAction
+                        ? () => onAction(data.rowEntries?.[0])
+                        : undefined
+                    }
+                    id="actions"
+                    align="right"
+                  >
+                    <Icon
+                      className="offset-top"
+                      name="grid-small-round"
+                      width={33}
+                      height={33}
+                    />
+                  </Styled.Td>
+                )}
+              </Styled.DataRow>
+            ))}
         </Styled.Body>
       </Styled.Table>
       <Styled.Pagination.Base id="base">

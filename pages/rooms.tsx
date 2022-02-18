@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import { DataTable, PageCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
+import { withAuth } from "@hocs/withAuth";
+import { getRoomList, Room } from "@services";
 
 const table = {
   header: [
@@ -39,7 +41,7 @@ const table = {
   ],
 };
 
-const Home: FC = () => {
+const Home = ({ rooms }: { rooms: Room[] }) => {
   return (
     <>
       <TopNav>
@@ -57,4 +59,13 @@ const Home: FC = () => {
   );
 };
 
-export default withLayout(Home, "narrow");
+export default withLayout(Home as FC);
+
+export const getServerSideProps = withAuth(async (ctx) => {
+  const jwt = ctx.session.accessToken;
+  const rooms = await getRoomList(jwt);
+
+  return {
+    props: { rooms },
+  };
+});

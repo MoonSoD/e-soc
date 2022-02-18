@@ -6,8 +6,9 @@ export interface Client extends User {
   email?: string;
   address: string;
   country: string;
-  joined_at: Date;
-  left_at?: Date;
+  joined_at: string;
+  left_at?: string;
+  roomId: number;
 }
 
 export const addClient = (data: Client, jwt?: string) =>

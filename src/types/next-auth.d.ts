@@ -1,4 +1,3 @@
-import NextAuth from "next-auth";
 import { Personel } from "@services";
 
 declare module "next-auth" {
@@ -8,7 +7,7 @@ declare module "next-auth" {
   }
 
   interface User extends Personel {
-    placeholder: unknown;
+    access_token: string;
   }
 }
 

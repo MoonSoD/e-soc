@@ -1,7 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { DataTable, PageCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import { useRouter } from "next/router";
+import { withAuth } from "@hocs/withAuth";
+import { Client, getClientsList } from "@services";
 
 const table = {
   header: [
@@ -18,28 +20,14 @@ const table = {
       label: "Izba",
     },
     {
-      id: "is-present",
-      label: "V zariadení",
-      align: "center" as const,
-      sortable: true,
-    },
-    {
       id: "action",
       label: "Akcia",
       align: "right" as const,
     },
   ],
-  data: [
-    {
-      rowEntries: ["Daniel Ciepluch", "Oščadnica 1253, Slovensko", 54, "nie"],
-    },
-    {
-      rowEntries: ["Daniel Ciepluch", "Oščadnica 1253, Slovensko", 54, "nie"],
-    },
-  ],
 };
 
-const Home: FC = () => {
+const Home = ({ clients }: { clients: Client[] }) => {
   const router = useRouter();
 
   return (
@@ -52,7 +40,13 @@ const Home: FC = () => {
           withActions
           searchPlaceholder="Ján Novák..."
           header={table.header}
-          data={table.data}
+          data={clients.map((client) => ({
+            rowEntries: [
+              `${client.name} ${client.surname}`,
+              client.address,
+              client.roomId,
+            ],
+          }))}
           onAction={(id) => router.push("/clients/client#" + id)}
         />
       </Container>
@@ -60,4 +54,13 @@ const Home: FC = () => {
   );
 };
 
-export default withLayout(Home, "narrow");
+export default withLayout(Home as FC);
+
+export const getServerSideProps = withAuth(async (ctx) => {
+  const jwt = ctx.session.accessToken;
+  const clients = await getClientsList(jwt);
+
+  return {
+    props: { clients },
+  };
+});

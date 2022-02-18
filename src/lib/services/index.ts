@@ -70,14 +70,20 @@ export {
   addPersonel,
   deletePersonel,
   getPersonelById,
+  getSelf,
   exportPersonelList,
   updatePersonel,
   getPersonelList,
 } from "./personel-service";
 export type { Personel } from "./personel-service";
 
-export { addReport, getReportById, getReportList } from "./reports-service";
-export type { ReportRevision, Report } from "./reports-service";
+export {
+  addReport,
+  getReportById,
+  getReportsForNow,
+  getReportList,
+} from "./reports-service";
+export type { ReportRevision, Report, ReportsForNow } from "./reports-service";
 
 export {
   addRoom,

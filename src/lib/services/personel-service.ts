@@ -13,6 +13,9 @@ export const addPersonel = (data: Personel, jwt?: string) =>
 export const getPersonelList = (jwt?: string) =>
   createService<Personel[]>({ endpoint: "/personel", jwt });
 
+export const getSelf = (jwt?: string) =>
+  createService<Personel>({ endpoint: "/personel/self", jwt });
+
 export const getPersonelById = (id: string, jwt?: string) =>
   createService<Personel>({ endpoint: `/personel/${id}`, jwt });
 

@@ -48,6 +48,12 @@
       ],
       "@services/*": [
         "src/lib/services/*"
+      ],
+      "@hocs": [
+        "src/lib/hocs"
+      ],
+      "@hocs/*": [
+        "src/lib/hocs/*"
       ]
     },
     "incremental": true

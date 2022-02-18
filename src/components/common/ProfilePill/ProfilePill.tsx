@@ -13,8 +13,9 @@ export const ProfilePill: FC<Props> = ({ showActions, name, role }) => {
     <Styled.Profile.Wrapper>
       <Styled.Profile.Picture>J</Styled.Profile.Picture>
       <Styled.Profile.Info>
-        <Styled.Profile.Name>
-          {name}
+        <Styled.Profile.Name>{name}</Styled.Profile.Name>
+        <Styled.Profile.Role>
+          {role}{" "}
           {showActions && (
             <>
               <a>
@@ -25,8 +26,7 @@ export const ProfilePill: FC<Props> = ({ showActions, name, role }) => {
               </a>
             </>
           )}
-        </Styled.Profile.Name>
-        <Styled.Profile.Role>{role}</Styled.Profile.Role>
+        </Styled.Profile.Role>
       </Styled.Profile.Info>
     </Styled.Profile.Wrapper>
   );

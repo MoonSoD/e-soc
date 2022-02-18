@@ -8,6 +8,7 @@ const http = axios.create({
 
 http.interceptors.response.use(
   (response) => {
+    console.log("Test middleware: " + JSON.stringify(response.headers));
     return response;
   },
   (error) => {

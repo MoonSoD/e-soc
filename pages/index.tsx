@@ -1,17 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import { AlertCard, StatsCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import styled from "styled-components";
 import {
-  GetServerSidePropsContext,
-  GetStaticProps,
-  GetStaticPropsContext,
-  InferGetServerSidePropsType,
-  InferGetStaticPropsType,
-  NextPageContext,
-} from "next";
-import { getStats, Stats } from "@services";
-import { getSession } from "next-auth/react";
+  getReportList,
+  getReportsForNow,
+  getStats,
+  Report,
+  ReportsForNow,
+  Stats,
+} from "@services";
+import { withAuth } from "@hocs/withAuth";
 
 const Styled = {
   StatsGrid: styled.section`
@@ -44,9 +43,7 @@ const Styled = {
   `,
 };
 
-const Home = ({
-  stats,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = ({ stats, reports }: { stats: Stats; reports: ReportsForNow }) => {
   return (
     <>
       <TopNav />
@@ -54,44 +51,44 @@ const Home = ({
         <Styled.StatsGrid>
           <StatsCard
             label="klientov"
-            value={stats.count.clients}
+            value={stats?.count?.clients}
             icon="user"
             accentColor="#418B48"
             color="#489B50"
           />
           <StatsCard
             label="plánovaných návštev"
-            value={stats.count.plannedVisits}
+            value={stats?.count?.plannedVisits}
             icon="group-alt"
             accentColor="#8B4141"
             color="#9B4848"
           />
           <StatsCard
             label="dostupných miest"
-            value={stats.count.availablePlaces}
+            value={stats?.count?.availablePlaces}
             icon="home-alt-check"
             accentColor="#415E8B"
             color="#48699B"
           />
         </Styled.StatsGrid>
         <Styled.AlertGrid>
-          <AlertCard type="night" />
-          <AlertCard type="day" />
+          <AlertCard report={reports.nightReport} type="night" />
+          <AlertCard report={reports.dayReport} type="day" />
         </Styled.AlertGrid>
       </Container>
     </>
   );
 };
 
-export default withLayout(Home, "narrow");
+export default withLayout(Home as FC);
 
-export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const session = await getSession(ctx);
-  const stats: Stats = await getStats(session?.accessToken);
+export const getServerSideProps = withAuth(async (context) => {
+  const jwt = context.session.accessToken;
+  const stats = await getStats(jwt);
+
+  const reports = await getReportsForNow(jwt);
 
   return {
-    props: {
-      stats,
-    },
+    props: { stats, reports },
   };
-};
+});

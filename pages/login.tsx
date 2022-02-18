@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { Form } from "@components";
 import { colors } from "@styles";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 
@@ -83,7 +83,7 @@ const Styled = {
 const Login: FC = () => {
   const form = useForm();
   const router = useRouter();
-
+  const session = useSession();
   const onSubmit = async () => {
     const tryLogin = async () => {
       const result = await signIn<any>("credentials", {
@@ -118,7 +118,7 @@ const Login: FC = () => {
         <Styled.CtaText>Začnite prihlásením do systému</Styled.CtaText>
         <Styled.Form onSubmit={(e) => e.preventDefault()}>
           <Form.Input.Base>
-            <Form.Input.Label>e-mail</Form.Input.Label>
+            <Form.Input.Label>e-mail {session.status}</Form.Input.Label>
             <Form.Input.Input
               placeholder="email@zoznam.sk"
               type="text"
