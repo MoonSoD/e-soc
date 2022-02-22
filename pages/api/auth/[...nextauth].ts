@@ -18,10 +18,10 @@ const callbacks: CallbacksOptions = {
     return token;
   },
   async session({ session, user, token }) {
-    const usr = await getSelf(token.access_token);
+    const usr = await getSelf(token?.access_token as string);
 
     session.user = usr;
-    session.accessToken = token.access_token;
+    session.accessToken = token?.access_token;
 
     return session;
   },
