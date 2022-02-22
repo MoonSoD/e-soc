@@ -21,7 +21,7 @@ const callbacks: CallbacksOptions = {
     const usr = await getSelf(token?.access_token as string);
 
     session.user = usr;
-    session.accessToken = token?.access_token;
+    session.accessToken = token?.access_token as string;
 
     return session;
   },
@@ -42,8 +42,8 @@ const options: NextAuthOptions = {
 
       async authorize(credentials) {
         const loginResult = await login(
-          credentials?.email,
-          credentials?.password,
+          credentials?.email as string,
+          credentials?.password as string,
         );
 
         if (loginResult) {
