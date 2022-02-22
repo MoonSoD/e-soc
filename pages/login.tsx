@@ -92,11 +92,13 @@ const Login: FC = () => {
         redirect: false,
       });
 
-      console.log(
-        `Res: ${JSON.stringify(result)}: ${result?.error === undefined}`,
-      );
+      if (result?.error === null) {
+        router.push("/");
 
-      return !result?.error === undefined;
+        return Promise.resolve(true);
+      }
+
+      return Promise.reject(false);
     };
 
     await toast.promise(tryLogin(), {

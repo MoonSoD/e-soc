@@ -21,7 +21,6 @@ const callbacks: CallbacksOptions = {
     const usr = await getSelf(token.access_token);
 
     session.user = usr;
-    console.log("USR " + session.user.name);
     session.accessToken = token.access_token;
 
     return session;

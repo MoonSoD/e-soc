@@ -4,6 +4,7 @@ import "@styles/normalize.css";
 import "@styles/global.scss";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
+import { Router } from "next/router";
 
 function MyApp({
   Component,

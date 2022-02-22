@@ -68,7 +68,7 @@ export default {
   Navigation: {
     Base: styled.nav`
       width: 100%;
-      background-color: #fff;
+      background-color: #f6f6f6;
       position: sticky;
       top: 0;
       padding: 0.5rem 0;

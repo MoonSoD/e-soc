@@ -1,11 +1,12 @@
-import createService from "@services";
+import createService, { Client } from "@services";
 
 export interface Room {
-  id?: number;
-  diplay: string;
+  id: number;
+  display: string;
   pavilon: number;
   level: number;
   max_capacity: number;
+  clients: Client[];
 }
 
 export const addRoom = (data: Room, jwt?: string) =>
@@ -18,7 +19,7 @@ export const getRoomById = (id: number, jwt?: string) =>
   createService<Room>({ endpoint: `/rooms/${id}`, jwt });
 
 export const updateRoom = (id: number, data: Room, jwt?: string) =>
-  createService<Room>({ endpoint: "/rooms", method: "PATCH", data, jwt });
+  createService<Room>({ endpoint: `/rooms/${id}`, method: "PATCH", data, jwt });
 
 export const deleteRoom = (id: number, jwt?: string) =>
   createService({ endpoint: `/rooms/${id}`, method: "delete", jwt });

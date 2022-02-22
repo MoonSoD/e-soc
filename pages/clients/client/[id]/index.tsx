@@ -2,6 +2,8 @@ import React, { FC } from "react";
 import { ClientDetail, Icon, withLayout } from "@components";
 import styled from "styled-components";
 import { colors } from "@styles";
+import { withAuth } from "@hocs/withAuth";
+import { Client, getClientById } from "@services";
 
 const Styled = {
   Wrapper: styled.div`
@@ -42,15 +44,44 @@ const Styled = {
   },
 };
 
-const Index: FC = () => {
+const Index = ({ client }: { client: Client }) => {
+  const fullName = `${client.name} ${client.surname}`;
+
   return (
-    <ClientDetail client="Ján Novák">
+    <ClientDetail client={client}>
       <Styled.Wrapper>
         <Styled.ClientInfo.List>
           <InfoBadge
             icon="id-card"
             label="Meno a priezvisko"
-            value="Ján Novák"
+            value={fullName}
+          />
+          <InfoBadge
+            icon="user-square"
+            label="Pohlavie"
+            value={client.sex === "M" ? "Muž" : "Žena"}
+          />
+          <InfoBadge
+            icon="phone-outline"
+            label="Rodné číslo"
+            value={client.personal_no}
+          />
+          <InfoBadge icon="location" label="Adresa" value={client.address} />
+          <InfoBadge icon="map" label="Krajina" value={client.country} />
+          <InfoBadge
+            icon="phone-outline"
+            label="Telefónne číslo"
+            value={client.phone}
+          />
+          <InfoBadge
+            icon="mail-open"
+            label="Email"
+            value={client.email || "Neuvedený"}
+          />
+          <InfoBadge
+            icon="home-plus"
+            label="Izba"
+            value={`${client.Room.display}, Pavilon: ${client.Room.pavilon}, Poschodie: ${client.Room.level}`}
           />
         </Styled.ClientInfo.List>
       </Styled.Wrapper>
@@ -58,12 +89,27 @@ const Index: FC = () => {
   );
 };
 
-export default withLayout(Index, "wide");
+export default withLayout(Index as FC);
+
+export const getServerSideProps = withAuth(async (context) => {
+  const jwt = context.session.accessToken;
+  const clientId = context.params?.id;
+
+  const client = await getClientById(clientId as string, jwt);
+
+  if (!client) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return { props: { client } };
+});
 
 interface Props {
   icon: string;
   label: string;
-  value: string;
+  value: string | number;
 }
 
 const InfoBadge: FC<Props> = ({ icon, label, value }) => {

@@ -7,7 +7,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    margin-top: 1rem;
     & img {
       cursor: pointer;
     }
@@ -15,13 +15,14 @@ export default {
   Base: styled.nav<{ open?: boolean }>`
     position: sticky;
     top: 0;
-    height: 98.23vh;
+    height: 100vh;
+    margin: 0;
     width: 15.625rem;
     background-color: #fdfdfd;
     transform: translateX(${(props) => (props?.open ? "0%" : "-100%")});
   `,
   Wrapper: styled.div`
-    margin: 0.9375rem 1.25rem;
+    margin: 0 1.25rem;
     height: 100%;
     display: flex;
     flex-direction: column;

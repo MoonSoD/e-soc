@@ -2,7 +2,7 @@ import createService from "@services";
 import { Personel } from "@services/personel-service";
 
 export interface User {
-  id?: string;
+  id: string;
   name: string;
   surname: string;
   sex: string;

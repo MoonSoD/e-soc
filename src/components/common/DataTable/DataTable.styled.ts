@@ -17,7 +17,7 @@ export default {
       font-size: 0.75rem;
       padding: 0 0.8rem;
       width: 12.5rem;
-      height: 2rem;
+      height: 2.5rem;
       box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.25);
       background-color: #fff;
     `,
@@ -38,6 +38,9 @@ export default {
       top: 60%;
       left: 200px;
       transform: translateY(-50%);
+    `,
+    Plus: styled.div`
+      margin-left: 1rem;
     `,
   },
   Table: styled.table`

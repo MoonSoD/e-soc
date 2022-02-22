@@ -4,7 +4,7 @@ import { colors } from "@styles";
 export default {
   Wrapper: styled.ul`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     border: 1px solid ${colors.darkGreen};
     padding: 0;
     height: 2.5rem;

@@ -61,4 +61,10 @@ export default {
       border: 0.1px solid ${colors.lightGray};
     }
   `,
+  Save: styled.div`
+    position: absolute;
+    right: -1rem;
+    top: 1rem;
+    margin-top: 0.3rem;
+  `,
 };

@@ -21,7 +21,11 @@ export interface ReportsForNow {
   dayReport: Report;
 }
 
-export const addReport = (data: Report, jwt?: string) =>
+export interface ICreateReport {
+  content: string;
+}
+
+export const addReport = (data: ICreateReport, jwt?: string) =>
   createService({ endpoint: "/reports", method: "POST", data, jwt });
 
 export const getReportsForNow = (jwt?: string) =>

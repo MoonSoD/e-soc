@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-hot-toast";
 
 const http = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -8,10 +9,14 @@ const http = axios.create({
 
 http.interceptors.response.use(
   (response) => {
-    console.log("Test middleware: " + JSON.stringify(response.headers));
     return response;
   },
-  (error) => {
+  (error: AxiosError) => {
+    const method = error.response?.config.method;
+    const editMethods = ["POST", "post", "PATCH", "patch"];
+    if (editMethods.includes(method ?? "")) {
+      toast.error("Nastal problém pri nahrávaní záznamu!");
+    }
     return Promise.reject(error);
   },
 );

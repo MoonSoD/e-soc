@@ -9,13 +9,8 @@ export const TabNav: FC = () => {
   return (
     <Styled.Wrapper>
       <PageLink href="/clients/client">
-        <Styled.Item active={router.pathname === "/clients/client"}>
+        <Styled.Item active={router.pathname.includes("/clients/client")}>
           Osobné údaje
-        </Styled.Item>
-      </PageLink>
-      <PageLink href="/clients/client/medication">
-        <Styled.Item active={router.pathname === "/clients/client/medication"}>
-          Správa liekov
         </Styled.Item>
       </PageLink>
     </Styled.Wrapper>

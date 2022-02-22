@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export default {
   Wrapper: styled.li`
-    border-top: 2px solid #f6f6f6;
-    border-bottom: 2px solid #f6f6f6;
     display: grid;
     padding: 0;
     width: 100%;

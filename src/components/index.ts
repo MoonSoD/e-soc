@@ -16,8 +16,8 @@ export { SideNavItem } from "./navigation/SideNav/SideNavItem/SideNavItem";
 export { TabNav } from "./navigation/TabNav/TabNav";
 export { TopNav } from "./navigation/TopNav/TopNav";
 
-export { MedBar } from "./medication/MedBar/MedBar";
-export { MedBarItem } from "./medication/MedBar/MedBarItem/MedBarItem";
+export { EditSideBar } from "./common/EditSideBar/EditSideBar";
+export { EditBarItem } from "./common/EditSideBar/EditBarItem/EditBarItem";
 export { Calendar } from "./medication/Calendar/Calendar";
 
 export { withLayout } from "./layout/withLayout";

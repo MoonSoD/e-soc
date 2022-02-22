@@ -1,10 +1,13 @@
 import create, { StateCreator } from "zustand";
 
-export type uiType = "nav";
+export type uiType = "nav" | "editBar";
 type uiState = "open" | "closed";
 
 export interface UI {
-  uiItems: { nav: uiState & string };
+  uiItems: {
+    nav: uiState & string;
+    editBar: uiState & string;
+  };
 
   isOpen: (type: uiType) => boolean;
 
@@ -18,10 +21,14 @@ const uiState: StateCreator<UI> = (set, get) => {
   return {
     uiItems: {
       nav: "open",
+      editBar: "open",
     },
     isOpen: (type: uiType) => get().uiItems?.[type] === "open",
     set: (type, state) =>
-      set((oldState) => ({ ...oldState, uiItems: { [type]: state } })),
+      set((oldState) => ({
+        ...oldState,
+        uiItems: { ...oldState.uiItems, [type]: state },
+      })),
     close: (type) => get().set(type, "closed"),
     open: (type) => get().set(type, "open"),
     toggle: (type) => get().set(type, get().isOpen(type) ? "closed" : "open"),

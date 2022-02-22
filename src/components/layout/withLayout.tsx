@@ -1,13 +1,17 @@
 import React, { FC } from "react";
-import { SideNav } from "@components";
+import { EditSideBar, SideNav } from "@components";
 import styled from "styled-components";
 import { colors } from "@styles";
 import { Toaster } from "react-hot-toast";
+import { useUI } from "@hooks";
+import { Input } from "@components/common/EditSideBar/EditSideBar";
 
 const Layout = {
   Wrapper: styled.section`
     display: flex;
     flex-direction: row;
+    z-index: -1;
+    //filter: brightness(50%);
   `,
   Main: styled.main`
     width: 100vw;

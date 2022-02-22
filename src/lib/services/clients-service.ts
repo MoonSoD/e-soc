@@ -1,4 +1,4 @@
-import createService from "@services";
+import createService, { Room } from "@services";
 import { User } from "@services/auth-service";
 
 export interface Client extends User {
@@ -9,6 +9,7 @@ export interface Client extends User {
   joined_at: string;
   left_at?: string;
   roomId: number;
+  Room: Room;
 }
 
 export const addClient = (data: Client, jwt?: string) =>
@@ -24,7 +25,12 @@ export const exportClientList = (jwt?: string) =>
   createService({ endpoint: "/clients/export", jwt });
 
 export const updateClient = (id: string, data: Client, jwt?: string) =>
-  createService<Client>({ endpoint: "/clients", method: "PATCH", data, jwt });
+  createService<Client>({
+    endpoint: `/clients/${id}`,
+    method: "PATCH",
+    data,
+    jwt,
+  });
 
 export const deleteClient = (id: string, jwt?: string) =>
   createService({ endpoint: `/clients/${id}`, method: "delete", jwt });

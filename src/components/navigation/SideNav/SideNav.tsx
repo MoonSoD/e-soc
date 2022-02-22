@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Icon, ProfilePill, SideNavItem } from "@components";
 import Image from "next/image";
 import Styled from "./SideNav.styled";
@@ -30,18 +30,18 @@ const links = [
     path: "/rooms",
   },
   {
-    icon: "plus-circle-outline",
-    label: "Lieky",
-    path: "/medication",
+    icon: "calendar-event",
+    label: "Návštevy",
+    path: "/visitations",
     expandable: true,
     subLinks: [
       {
-        label: "Zoznam liekov",
-        path: "/medication",
+        label: "Zoznam návštev",
+        path: "/visitations",
       },
       {
-        label: "Kalendár liekov",
-        path: "/medication/calendar",
+        label: "Kalendár návštev",
+        path: "/visitations/calendar",
       },
     ],
   },

@@ -1,9 +1,25 @@
 import React, { FC, useEffect } from "react";
-import { DataTable, PageCard, TopNav, withLayout } from "@components";
+import {
+  DataTable,
+  EditSideBar,
+  PageCard,
+  TopNav,
+  withLayout,
+} from "@components";
 import { Container } from "@styles";
 import { useRouter } from "next/router";
 import { withAuth } from "@hocs/withAuth";
-import { Client, getClientsList } from "@services";
+import {
+  addClient,
+  Client,
+  getClientById,
+  getClientsList,
+  getRoomList,
+  Room,
+  updateClient,
+} from "@services";
+import { clientSchema } from "@schemas";
+import useSWR from "swr";
 
 const table = {
   header: [
@@ -27,8 +43,9 @@ const table = {
   ],
 };
 
-const Home = ({ clients }: { clients: Client[] }) => {
+const Home = ({ clients, jwt }: { clients: Client[]; jwt: string }) => {
   const router = useRouter();
+  const roomList = useSWR<Room[]>("/rooms", () => getRoomList(jwt));
 
   return (
     <>
@@ -46,8 +63,51 @@ const Home = ({ clients }: { clients: Client[] }) => {
               client.address,
               client.roomId,
             ],
+            id: client.id,
           }))}
-          onAction={(id) => router.push("/clients/client#" + id)}
+          onAction={(id) => router.push("/clients/client/" + id)}
+          sidebar={{
+            label: "Klient",
+            fetchFn: getClientById,
+            onSubmit: (data, mode) => {
+              if (mode === "create") {
+                addClient(data, jwt).then(() => router.reload());
+              } else {
+                updateClient(data.id, data, jwt).then(() => router.reload());
+              }
+            },
+            inputs: [
+              { id: "name", label: "meno" },
+              { id: "surname", label: "priezvisko" },
+              {
+                id: "sex",
+                label: "pohlavie",
+                type: "select",
+                options: [
+                  { label: "Muž", value: "M" },
+                  { label: "Žena", value: "F" },
+                ],
+              },
+              {
+                id: "roomId",
+                label: "izba",
+                type: "select",
+                options:
+                  roomList?.data
+                    ?.filter((room) => room.clients.length < room.max_capacity)
+                    ?.map((room) => ({
+                      label: room.display,
+                      value: room.id,
+                    })) ?? [],
+              },
+              { id: "personal_no", label: "rodné číslo" },
+              { id: "phone", label: "telefónne číslo" },
+              { id: "email", label: "email" },
+              { id: "address", label: "adresa" },
+              { id: "country", label: "krajina" },
+            ],
+            schema: clientSchema,
+          }}
         />
       </Container>
     </>
@@ -61,6 +121,6 @@ export const getServerSideProps = withAuth(async (ctx) => {
   const clients = await getClientsList(jwt);
 
   return {
-    props: { clients },
+    props: { clients, jwt },
   };
 });

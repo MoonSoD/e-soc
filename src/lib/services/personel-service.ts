@@ -24,7 +24,7 @@ export const exportPersonelList = (jwt?: string) =>
 
 export const updatePersonel = (id: string, data: Personel, jwt?: string) =>
   createService<Personel>({
-    endpoint: "/personel",
+    endpoint: `/personel/${id}`,
     method: "PATCH",
     data,
     jwt,

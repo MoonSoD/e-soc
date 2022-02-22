@@ -2,14 +2,7 @@ import React, { FC } from "react";
 import { AlertCard, StatsCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import styled from "styled-components";
-import {
-  getReportList,
-  getReportsForNow,
-  getStats,
-  Report,
-  ReportsForNow,
-  Stats,
-} from "@services";
+import { getReportsForNow, getStats, ReportsForNow, Stats } from "@services";
 import { withAuth } from "@hocs/withAuth";
 
 const Styled = {

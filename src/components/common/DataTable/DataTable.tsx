@@ -1,10 +1,16 @@
-import { ChangeEvent, FC, useEffect } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import Styled from "./DataTable.styled";
 import { Icon } from "@components/common/Icon/Icon";
 import { useForm } from "react-hook-form";
+import { EditSideBar, Input } from "@components/common/EditSideBar/EditSideBar";
+import { useSession } from "next-auth/react";
+import { ButtonPlus } from "@components/common/buttons/ButtonPlus/ButtonPlus";
+import { Struct } from "superstruct";
+import useSWR from "swr";
 
 interface Props {
   withActions?: boolean;
+  hideUpdate?: boolean;
   onAction?: (id: string | number | boolean) => void;
   header: {
     label: string;
@@ -15,18 +21,29 @@ interface Props {
   data: RowData;
   onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
   searchPlaceholder?: string;
+  sidebar: {
+    label: string;
+    inputs: Input[];
+    onSubmit: (data: any, mode: "create" | "edit") => void;
+    schema: Struct<any, any>;
+    fetchFn: (id: any, jwt?: string) => Promise<any>;
+  };
 }
 
-type RowData = { rowEntries: RowEntries }[];
+//type Data = any[];
+
+type RowData = { rowEntries: RowEntries; id: string | number }[];
 type RowEntries = (string | number | boolean)[];
 
 export const DataTable: FC<Props> = ({
   withActions,
+  hideUpdate,
   onAction,
   header,
   data,
   onSearch,
   searchPlaceholder,
+  sidebar,
 }) => {
   const indexOf = (
     data: { rowEntries: RowEntries },
@@ -34,9 +51,37 @@ export const DataTable: FC<Props> = ({
   ) => data?.rowEntries?.indexOf(entry);
 
   const { register, watch } = useForm();
+  const session = useSession();
+
+  const [mode, setMode] = useState("create" as "create" | "edit");
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const [editedObjectId, setEditedObjectId] = useState<string | number>(1);
+
+  //const editedObject = data.find((data) => data.id === editedObjectId);
+
+  const resolvedObject = useSWR(
+    session?.status === "authenticated"
+      ? `${editedObjectId}-${sidebar.label}`
+      : null,
+    () => sidebar.fetchFn(editedObjectId, session.data?.accessToken),
+  );
+
+  useEffect(() => console.log(JSON.stringify(resolvedObject.data)));
 
   return (
     <>
+      {sidebarOpen && (
+        <EditSideBar
+          editedObject={resolvedObject?.data}
+          schema={sidebar.schema}
+          onSubmit={sidebar.onSubmit}
+          label={sidebar.label}
+          mode={mode}
+          onClose={() => setSidebarOpen(false)}
+          inputs={sidebar.inputs}
+        />
+      )}
+
       <Styled.Search.Wrapper id="wrapper">
         <Styled.Search.Badge>Vyhľadať</Styled.Search.Badge>
         <Styled.Search.Input
@@ -48,6 +93,14 @@ export const DataTable: FC<Props> = ({
         <Styled.Search.Icon>
           <Icon name="search" width={22} height={22} />
         </Styled.Search.Icon>
+        <Styled.Search.Plus>
+          <ButtonPlus
+            onClick={() => {
+              setMode("create");
+              setSidebarOpen(true);
+            }}
+          />
+        </Styled.Search.Plus>
       </Styled.Search.Wrapper>
       <Styled.Table id="table">
         <Styled.Header>
@@ -68,11 +121,11 @@ export const DataTable: FC<Props> = ({
           {data
             ?.filter((data) => {
               return data.rowEntries.find((entry) =>
-                entry.toString().includes(watch("search") ?? ""),
+                entry?.toString().includes(watch("search") ?? ""),
               );
             })
             ?.map((data, i) => (
-              <Styled.DataRow>
+              <Styled.DataRow key={i}>
                 {data?.rowEntries?.map((entry) => (
                   <Styled.Td
                     align={header[indexOf(data, entry)]?.align ?? "left"}
@@ -81,29 +134,35 @@ export const DataTable: FC<Props> = ({
                     {entry}
                   </Styled.Td>
                 ))}
-                {withActions && (
-                  <Styled.Td
-                    onClick={
-                      onAction
-                        ? () => onAction(data.rowEntries?.[0])
-                        : undefined
-                    }
-                    id="actions"
-                    align="right"
-                  >
+                <Styled.Td id="actions" align="right" key="action">
+                  {withActions && (
                     <Icon
+                      onClick={onAction ? () => onAction(data.id) : undefined}
                       className="offset-top"
-                      name="grid-small-round"
+                      name="search"
                       width={33}
                       height={33}
                     />
-                  </Styled.Td>
-                )}
+                  )}
+
+                  {!hideUpdate && (
+                    <Icon
+                      onClick={() => {
+                        setMode("edit");
+                        setSidebarOpen(true);
+                        setEditedObjectId(data.id);
+                      }}
+                      name="edit"
+                      width={30}
+                      height={30}
+                    />
+                  )}
+                </Styled.Td>
               </Styled.DataRow>
             ))}
         </Styled.Body>
       </Styled.Table>
-      <Styled.Pagination.Base id="base">
+      {/*<Styled.Pagination.Base id="base">
         <Styled.Pagination.List>
           <Styled.Pagination.Item>
             <Icon white name="chevron-big-left" width={12} height={12} />
@@ -113,7 +172,7 @@ export const DataTable: FC<Props> = ({
             <Icon white name="chevron-big-right" width={12} height={12} />
           </Styled.Pagination.Item>
         </Styled.Pagination.List>
-      </Styled.Pagination.Base>
+      </Styled.Pagination.Base>*/}
     </>
   );
 };

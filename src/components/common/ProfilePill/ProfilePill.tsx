@@ -11,7 +11,9 @@ interface Props {
 export const ProfilePill: FC<Props> = ({ showActions, name, role }) => {
   return (
     <Styled.Profile.Wrapper>
-      <Styled.Profile.Picture>J</Styled.Profile.Picture>
+      <Styled.Profile.Picture>
+        {name.charAt(0).toUpperCase()}
+      </Styled.Profile.Picture>
       <Styled.Profile.Info>
         <Styled.Profile.Name>{name}</Styled.Profile.Name>
         <Styled.Profile.Role>

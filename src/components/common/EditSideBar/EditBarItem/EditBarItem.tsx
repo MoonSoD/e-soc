@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Styled from "./MedBarItem.styled";
+import Styled from "./EditBarItem.styled";
 import { Select } from "@components";
 
 const options = [
@@ -8,7 +8,7 @@ const options = [
   { value: "FURORESE 1000", label: "FURORESE 1000" },
 ];
 
-export const MedBarItem: FC = () => {
+export const EditBarItem: FC = () => {
   return (
     <Styled.Wrapper>
       <div>

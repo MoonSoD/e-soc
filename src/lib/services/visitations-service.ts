@@ -3,8 +3,9 @@ import { User } from "@services/auth-service";
 import { Client } from "@services/clients-service";
 
 export interface Visitation {
+  id: number;
   note: string;
-  dateTime: Date;
+  dateTime: string;
   client: Client;
 }
 
@@ -22,7 +23,7 @@ export const exportVisitationList = (jwt?: string) =>
 
 export const updateVisitation = (id: string, data: Visitation, jwt?: string) =>
   createService<Visitation>({
-    endpoint: "/visitations",
+    endpoint: `/visitations/${id}`,
     method: "PATCH",
     data,
     jwt,

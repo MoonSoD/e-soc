@@ -54,6 +54,12 @@
       ],
       "@hocs/*": [
         "src/lib/hocs/*"
+      ],
+      "@schemas": [
+        "src/lib/schemas"
+      ],
+      "@schemas/*": [
+        "src/lib/schemas/*"
       ]
     },
     "incremental": true

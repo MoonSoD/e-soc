@@ -7,6 +7,7 @@ interface Props {
   className?: string;
   white?: boolean;
   gray?: boolean;
+  onClick?: () => void;
 }
 
 export const Icon: FC<Props> = ({
@@ -16,9 +17,11 @@ export const Icon: FC<Props> = ({
   className,
   white,
   gray,
+  onClick,
 }) => {
   return (
     <img
+      onClick={onClick}
       style={{ filter: white ? "invert(100%)" : gray ? "invert(50%)" : "" }}
       className={className}
       alt={`Ikona ${name}`}

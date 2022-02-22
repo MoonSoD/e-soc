@@ -2,12 +2,14 @@ import React, { FC } from "react";
 import { DataTable, PageCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import { withAuth } from "@hocs/withAuth";
-import { getRoomList, Room } from "@services";
+import { addRoom, getRoomById, getRoomList, Room, updateRoom } from "@services";
+import { roomSchema } from "@schemas";
+import { useRouter } from "next/router";
 
 const table = {
   header: [
     {
-      id: "room",
+      id: "display",
       label: "Izba",
     },
     {
@@ -21,7 +23,7 @@ const table = {
       align: "center" as const,
     },
     {
-      id: "occupation",
+      id: "max_capacity",
       label: "Obsadenie",
       align: "center" as const,
     },
@@ -41,7 +43,9 @@ const table = {
   ],
 };
 
-const Home = ({ rooms }: { rooms: Room[] }) => {
+const Home = ({ rooms, jwt }: { rooms: Room[]; jwt: string }) => {
+  const router = useRouter();
+
   return (
     <>
       <TopNav>
@@ -49,10 +53,35 @@ const Home = ({ rooms }: { rooms: Room[] }) => {
       </TopNav>
       <Container marginTop="2.85rem">
         <DataTable
-          withActions
           searchPlaceholder="12"
           header={table.header}
-          data={table.data}
+          data={rooms?.map((room) => ({
+            rowEntries: [
+              room.display,
+              room.pavilon,
+              room.level,
+              `${room.clients.length}/${room.max_capacity}`,
+            ],
+            id: room.id,
+          }))}
+          sidebar={{
+            label: "Izba",
+            fetchFn: getRoomById,
+            onSubmit: (data, mode) => {
+              if (mode === "create") {
+                addRoom(data, jwt).then(() => router.reload());
+              } else {
+                updateRoom(data.id, data, jwt).then(() => router.reload());
+              }
+            },
+            inputs: [
+              { id: "display", label: "štítok" },
+              { id: "pavilon", label: "pavilón", type: "number" },
+              { id: "level", label: "poschodie", type: "number" },
+              { id: "max_capacity", label: "max kapacita", type: "number" },
+            ],
+            schema: roomSchema,
+          }}
         />
       </Container>
     </>
@@ -66,6 +95,6 @@ export const getServerSideProps = withAuth(async (ctx) => {
   const rooms = await getRoomList(jwt);
 
   return {
-    props: { rooms },
+    props: { rooms, jwt },
   };
 });
