@@ -43,13 +43,10 @@ export const EditSideBar: FC<Props> = ({
   const form = useForm({
     resolver: superstructResolver(mode === "create" ? schema : partial(schema)),
     reValidateMode: "onChange",
-    defaultValues:
-      mode === "edit" ? useMemo(() => editedObject, [editedObject]) : undefined,
+    defaultValues: mode === "edit" ? editedObject : undefined,
   });
 
   useEffect(() => form.reset(), [editedObject]);
-
-  useEffect(() => console.log(form.getValues().sex), []);
 
   return (
     <Styled.Wrapper>

@@ -3,8 +3,13 @@ import Styled from "./Calendar.styled";
 import { useCalendar } from "@h6s/calendar";
 import { format } from "date-fns";
 import locale from "date-fns/locale/sk";
+import { Visitation } from "@services";
 
-export const Calendar: FC = () => {
+interface Props {
+  visits: Visitation[];
+}
+
+export const Calendar: FC<Props> = ({ visits }) => {
   const { cursorDate, headers, body, view, navigation } = useCalendar();
 
   useEffect(() => view.showWeekView(), []);
@@ -41,13 +46,33 @@ export const Calendar: FC = () => {
                 {value.getDate()}
               </Styled.CalendarBigDateHeading>
             </Styled.CalendarEntry>
-            {[...Array(24)].map((_, i) => (
-              <Styled.CalendarEntry key={`${value.getDay()}_${i}`}>
-                <span key={i} id={`${i}`}>
-                  {i}:00
-                </span>
-              </Styled.CalendarEntry>
-            ))}
+            {[...Array(14)].map((_, i) => {
+              const visit = visits.find((visit) => {
+                const date = new Date(visit.dateTime);
+
+                if (
+                  date.getDate() === value.getDate() &&
+                  date.getHours() === i + 9
+                ) {
+                  return true;
+                }
+              });
+
+              return (
+                <Styled.CalendarEntry key={`${value.getDay()}_${i}`}>
+                  {visit && (
+                    <Styled.CalVisit>
+                      {new Date(visit.dateTime).getHours()}:00,{" "}
+                      {visit.client.name} {visit.client.surname} <br />{" "}
+                      {visit.note}
+                    </Styled.CalVisit>
+                  )}
+                  <span key={i} id={`${i}`}>
+                    {i + 9}:00
+                  </span>
+                </Styled.CalendarEntry>
+              );
+            })}
           </Styled.CalendarDay>
         ))}
       </Styled.Calendar>

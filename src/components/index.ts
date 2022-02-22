@@ -7,7 +7,6 @@ export { ButtonCross } from "./common/buttons/ButtonCross/ButtonCross";
 export { ButtonPlus } from "./common/buttons/ButtonPlus/ButtonPlus";
 export { Select } from "./common/Select/Select";
 
-export { AlertCard } from "./card/AlertCard/AlertCard";
 export { StatsCard } from "./card/StatsCard/StatsCard";
 export { PageCard } from "./card/PageCard/PageCard";
 

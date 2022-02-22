@@ -2,7 +2,14 @@ import React, { FC } from "react";
 import { DataTable, PageCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import { withAuth } from "@hocs/withAuth";
-import { addRoom, getRoomById, getRoomList, Room, updateRoom } from "@services";
+import {
+  addRoom,
+  deleteRoom,
+  getRoomById,
+  getRoomList,
+  Room,
+  updateRoom,
+} from "@services";
 import { roomSchema } from "@schemas";
 import { useRouter } from "next/router";
 
@@ -55,6 +62,7 @@ const Home = ({ rooms, jwt }: { rooms: Room[]; jwt: string }) => {
         <DataTable
           searchPlaceholder="12"
           header={table.header}
+          deleteFn={deleteRoom}
           data={rooms?.map((room) => ({
             rowEntries: [
               room.display,

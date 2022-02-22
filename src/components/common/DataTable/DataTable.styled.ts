@@ -40,7 +40,24 @@ export default {
       transform: translateY(-50%);
     `,
     Plus: styled.div`
+      display: flex;
       margin-left: 1rem;
+    `,
+    Export: styled.a`
+      width: 2rem;
+      height: 2rem;
+      display: grid;
+      place-items: center;
+      padding: 0.25rem;
+      margin-left: 0.25rem;
+      cursor: pointer;
+      background-color: ${colors.darkGreen};
+      border-radius: 10px;
+
+      &:hover {
+        background-color: ${colors.darkGray};
+        transition-duration: 0.3s;
+      }
     `,
   },
   Table: styled.table`

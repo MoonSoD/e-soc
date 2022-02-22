@@ -76,12 +76,12 @@ const Index = ({ client }: { client: Client }) => {
           <InfoBadge
             icon="mail-open"
             label="Email"
-            value={client.email || "Neuvedený"}
+            value={client?.email || "Neuvedený"}
           />
           <InfoBadge
             icon="home-plus"
             label="Izba"
-            value={`${client.Room.display}, Pavilon: ${client.Room.pavilon}, Poschodie: ${client.Room.level}`}
+            value={`${client?.Room?.display}, Pavilon: ${client?.Room?.pavilon}, Poschodie: ${client?.Room?.level}`}
           />
         </Styled.ClientInfo.List>
       </Styled.Wrapper>

@@ -41,7 +41,7 @@ const links = [
       },
       {
         label: "Kalendár návštev",
-        path: "/visitations/calendar",
+        path: "/",
       },
     ],
   },
@@ -80,7 +80,6 @@ export const SideNav: FC = () => {
               height={55}
               unoptimized
             />
-            <Icon name="menu-alt-05" width={36} height={36} />
           </Styled.Header>
           <Styled.Label>HLAVNÉ MENU</Styled.Label>
           <Styled.List>

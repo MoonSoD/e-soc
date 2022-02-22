@@ -12,6 +12,7 @@ import { withAuth } from "@hocs/withAuth";
 import {
   addClient,
   Client,
+  deleteClient,
   getClientById,
   getClientsList,
   getRoomList,
@@ -65,6 +66,8 @@ const Home = ({ clients, jwt }: { clients: Client[]; jwt: string }) => {
             ],
             id: client.id,
           }))}
+          exportLink="clients/export"
+          deleteFn={deleteClient}
           onAction={(id) => router.push("/clients/client/" + id)}
           sidebar={{
             label: "Klient",

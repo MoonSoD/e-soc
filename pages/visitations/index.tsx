@@ -5,6 +5,7 @@ import { withAuth } from "@hocs/withAuth";
 import {
   addClient,
   addVisitation,
+  deleteVisitation,
   getClientsList,
   getRoomList,
   getVisitationById,
@@ -60,7 +61,7 @@ const Home = ({
   return (
     <>
       <TopNav>
-        <PageCard label="Zoznam izieb" icon="home-plus" />
+        <PageCard label="Zoznam návštev" icon="home-plus" />
       </TopNav>
       <Container marginTop="2.85rem">
         <DataTable
@@ -75,6 +76,8 @@ const Home = ({
             ],
             id: visit.id,
           }))}
+          deleteFn={deleteVisitation}
+          exportLink="visitations/export"
           sidebar={{
             label: "Návšteva",
             fetchFn: getVisitationById,

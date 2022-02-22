@@ -4,6 +4,7 @@ import { colors } from "@styles";
 export default {
   Wrapper: styled.section`
     margin-left: 5rem;
+    margin-top: 2.5rem;
     flex-grow: 1;
     flex-shrink: 1;
   `,
@@ -64,6 +65,14 @@ export default {
     font-weight: 500;
     padding: 0;
     margin: 0;
+  `,
+  CalVisit: styled.div`
+    background-color: ${colors.darkGreen};
+    color: white;
+    user-select: none;
+    padding: 0.2rem;
+    border-radius: 8px;
+    box-shadow: 0px 0px 31.875px 1.275px rgba(0, 0, 0, 0.25);
   `,
   Navigation: {
     Base: styled.nav`

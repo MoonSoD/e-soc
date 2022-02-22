@@ -8,7 +8,7 @@ const clientSchema = object({
   roomId: number(),
   personal_no: size(string(), 1, 11),
   phone: size(string(), 13, 13),
-  email: size(string(), 5, 64),
+  email: optional(size(string(), 5, 64)),
   address: size(string(), 1, 128),
   country: size(string(), 1, 64),
 });

@@ -120,7 +120,7 @@ const Login: FC = () => {
         <Styled.CtaText>Začnite prihlásením do systému</Styled.CtaText>
         <Styled.Form onSubmit={(e) => e.preventDefault()}>
           <Form.Input.Base>
-            <Form.Input.Label>e-mail {session.status}</Form.Input.Label>
+            <Form.Input.Label>e-mail</Form.Input.Label>
             <Form.Input.Input
               placeholder="email@zoznam.sk"
               type="text"

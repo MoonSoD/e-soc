@@ -1,8 +1,15 @@
 import React, { FC } from "react";
-import { AlertCard, StatsCard, TopNav, withLayout } from "@components";
+import { Calendar, StatsCard, TopNav, withLayout } from "@components";
 import { Container } from "@styles";
 import styled from "styled-components";
-import { getReportsForNow, getStats, ReportsForNow, Stats } from "@services";
+import {
+  getReportsForNow,
+  getStats,
+  getVisitationList,
+  ReportsForNow,
+  Stats,
+  Visitation,
+} from "@services";
 import { withAuth } from "@hocs/withAuth";
 
 const Styled = {
@@ -19,10 +26,6 @@ const Styled = {
     @media only screen and (min-width: 1024px) {
       grid-template-columns: repeat(3, 1fr);
     }
-
-    @media only screen and (min-width: 1280px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
   `,
   AlertGrid: styled.section`
     display: grid;
@@ -36,7 +39,7 @@ const Styled = {
   `,
 };
 
-const Home = ({ stats, reports }: { stats: Stats; reports: ReportsForNow }) => {
+const Home = ({ stats, visits }: { stats: Stats; visits: Visitation[] }) => {
   return (
     <>
       <TopNav />
@@ -64,10 +67,7 @@ const Home = ({ stats, reports }: { stats: Stats; reports: ReportsForNow }) => {
             color="#48699B"
           />
         </Styled.StatsGrid>
-        <Styled.AlertGrid>
-          <AlertCard report={reports.nightReport} type="night" />
-          <AlertCard report={reports.dayReport} type="day" />
-        </Styled.AlertGrid>
+        <Calendar visits={visits} />
       </Container>
     </>
   );
@@ -78,10 +78,11 @@ export default withLayout(Home as FC);
 export const getServerSideProps = withAuth(async (context) => {
   const jwt = context.session.accessToken;
   const stats = await getStats(jwt);
+  const visits = await getVisitationList(jwt);
 
-  const reports = await getReportsForNow(jwt);
+  // const reports = await getReportsForNow(jwt);
 
   return {
-    props: { stats, reports },
+    props: { stats, visits },
   };
 });

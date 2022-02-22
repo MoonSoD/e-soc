@@ -7,6 +7,9 @@ import { useSession } from "next-auth/react";
 import { ButtonPlus } from "@components/common/buttons/ButtonPlus/ButtonPlus";
 import { Struct } from "superstruct";
 import useSWR from "swr";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
+import http from "../../../lib/http";
 
 interface Props {
   withActions?: boolean;
@@ -21,6 +24,7 @@ interface Props {
   data: RowData;
   onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
   searchPlaceholder?: string;
+  deleteFn?: (id: any, jwt?: string) => Promise<any>;
   sidebar: {
     label: string;
     inputs: Input[];
@@ -28,6 +32,7 @@ interface Props {
     schema: Struct<any, any>;
     fetchFn: (id: any, jwt?: string) => Promise<any>;
   };
+  exportLink?: string;
 }
 
 //type Data = any[];
@@ -39,11 +44,13 @@ export const DataTable: FC<Props> = ({
   withActions,
   hideUpdate,
   onAction,
+  exportLink,
   header,
   data,
   onSearch,
   searchPlaceholder,
   sidebar,
+  deleteFn,
 }) => {
   const indexOf = (
     data: { rowEntries: RowEntries },
@@ -52,6 +59,7 @@ export const DataTable: FC<Props> = ({
 
   const { register, watch } = useForm();
   const session = useSession();
+  const router = useRouter();
 
   const [mode, setMode] = useState("create" as "create" | "edit");
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -100,6 +108,32 @@ export const DataTable: FC<Props> = ({
               setSidebarOpen(true);
             }}
           />
+          {exportLink && (
+            <Styled.Search.Export
+              onClick={() => {
+                http
+                  .get(`${process.env.NEXT_PUBLIC_API_URL}${exportLink}`, {
+                    responseType: "blob",
+                    headers: {
+                      Authorization: `Bearer ${session.data?.accessToken}`,
+                      "Content-Type": "text/xlsx",
+                    },
+                  })
+                  .then((response) => {
+                    const url = window.URL.createObjectURL(
+                      new Blob([response.data]),
+                    );
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.setAttribute("download", "export.xlsx"); //or any other extension
+                    document.body.appendChild(link);
+                    link.click();
+                  });
+              }}
+            >
+              <Icon name="table" width={22} height={22} white />
+            </Styled.Search.Export>
+          )}
         </Styled.Search.Plus>
       </Styled.Search.Wrapper>
       <Styled.Table id="table">
@@ -157,6 +191,26 @@ export const DataTable: FC<Props> = ({
                       height={30}
                     />
                   )}
+
+                  <Icon
+                    onClick={() => {
+                      if (deleteFn) {
+                        toast
+                          .promise(
+                            deleteFn(data.id, session?.data?.accessToken),
+                            {
+                              success: "Položka úspešne odstránená!",
+                              loading: "Odstraňujem položku",
+                              error: "Nastala chyba!",
+                            },
+                          )
+                          .then(() => router.reload());
+                      }
+                    }}
+                    name="trash-empty"
+                    width={30}
+                    height={30}
+                  />
                 </Styled.Td>
               </Styled.DataRow>
             ))}
