@@ -185,6 +185,7 @@ export const DataTable: FC<Props> = ({
                         setMode("edit");
                         setSidebarOpen(true);
                         setEditedObjectId(data.id);
+                        console.log("dtid: " + data.id);
                       }}
                       name="edit"
                       width={30}

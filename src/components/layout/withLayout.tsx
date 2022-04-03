@@ -5,6 +5,7 @@ import { colors } from "@styles";
 import { Toaster } from "react-hot-toast";
 import { useUI } from "@hooks";
 import { Input } from "@components/common/EditSideBar/EditSideBar";
+import Head from "next/head";
 
 const Layout = {
   Wrapper: styled.section`
@@ -30,6 +31,9 @@ export const withLayout =
   (props: JSX.IntrinsicAttributes & { children?: React.ReactNode }) => {
     return (
       <>
+        <Head>
+          <title>Informačný systém | esoc</title>
+        </Head>
         <Layout.Wrapper>
           <SideNav />
           <Layout.Main>

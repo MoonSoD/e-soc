@@ -5,7 +5,7 @@ import { Icon } from "@components";
 interface Props {
   showActions?: boolean;
   name: string;
-  role: string;
+  role: string | number;
 }
 
 export const ProfilePill: FC<Props> = ({ showActions, name, role }) => {

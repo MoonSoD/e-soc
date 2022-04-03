@@ -24,13 +24,15 @@ export const getClientById = (id: string, jwt?: string) =>
 export const exportClientList = (jwt?: string) =>
   createService({ endpoint: "/clients/export", jwt });
 
-export const updateClient = (id: string, data: Client, jwt?: string) =>
-  createService<Client>({
+export const updateClient = async (id: string, data: Client, jwt?: string) => {
+  console.log("DDDID: " + id);
+  await createService<Client>({
     endpoint: `/clients/${id}`,
     method: "PATCH",
     data,
     jwt,
   });
+};
 
 export const deleteClient = (id: string, jwt?: string) =>
   createService({ endpoint: `/clients/${id}`, method: "delete", jwt });

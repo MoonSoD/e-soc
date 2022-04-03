@@ -88,14 +88,7 @@ export const SideNav: FC = () => {
             ))}
           </Styled.List>
         </div>
-        <ProfilePill
-          name={
-            isAuthed && userData
-              ? `${userData?.name} ${userData?.surname}`
-              : "..."
-          }
-          role={isAuthed && userData ? userRole() : "..."}
-        />
+        <ProfilePill name={`Štefan Melicher`} role={"Užívateľ"} />
       </Styled.Wrapper>
     </Styled.Base>
   );
