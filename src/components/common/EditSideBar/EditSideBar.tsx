@@ -143,8 +143,10 @@ export const EditSideBar: FC<Props> = ({
           const isValid = await form.trigger();
           console.log(form.formState.errors);
           if (isValid) {
-            if (!form.getValues()?.id) {
-              form.setValue("id", editedObject?.id);
+            if (mode === "edit") {
+              if (!form.getValues()?.id) {
+                form.setValue("id", editedObject?.id);
+              }
             }
 
             onSubmit(form.getValues(), mode);
